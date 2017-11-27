@@ -4,6 +4,8 @@
  * then later create a class for each problem we want to solve and have the
  * class extend this interface
  * 
+ * Only need to instantiate a given problem once, or maybe the whole thing can be static somehow
+ * 
  * @author ryanw
  *
  */
@@ -17,4 +19,10 @@ public interface Problem {
 	 * @return a constant value
 	 */
 	public int getNumChromosomes();
+	
+	/**
+	 * return 1 if we are to maximize the return value of fitness for this problem, or -1 if we are to minimize
+	 * 
+	 */
+	public int getMaxOrMin();
 }
