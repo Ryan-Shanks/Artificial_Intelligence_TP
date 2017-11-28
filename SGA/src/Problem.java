@@ -4,7 +4,11 @@
  * then later create a class for each problem we want to solve and have the
  * class extend this interface
  * 
- * Only need to instantiate a given problem once, or maybe the whole thing can be static somehow
+ * Only need to instantiate a given problem once, or maybe the whole thing can
+ * be static somehow
+ * 
+ * I think if we can define this interface to include all relevant fields for a
+ * given problem it will make the SGA driver functions easy
  * 
  * @author ryanw
  *
@@ -19,9 +23,10 @@ public interface Problem {
 	 * @return a constant value
 	 */
 	public int getNumChromosomes();
-	
+
 	/**
-	 * return 1 if we are to maximize the return value of fitness for this problem, or -1 if we are to minimize
+	 * return 1 if we are to maximize the return value of fitness for this problem,
+	 * or -1 if we are to minimize
 	 * 
 	 */
 	public int getMaxOrMin();
