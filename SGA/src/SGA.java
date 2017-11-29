@@ -98,10 +98,5 @@ public class SGA {
 			mate(matingPool); // mate members of the pool to produce a new pop, overwriting the old one
 			mutateAll(); // apply mutations
 		}
-	}
-	
-	public void MatingPool() {
-		
-	}
-	
+	}	
 }
