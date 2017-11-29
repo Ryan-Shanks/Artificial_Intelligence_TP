@@ -4,6 +4,7 @@ public class Individual {
 	public boolean[] genes;
 	public static Problem prob = null;
 	public double fitness;
+	public double percentage;
 	
 	/**
 	 * create a candidate with specific genes
@@ -31,8 +32,9 @@ public class Individual {
 	/**
 	 * will calculate the fitness of this individual and store it in the fitness variable
 	 */
-	public void calcFitness(){
+	public double calcFitness(){
 		fitness = prob.fitness(genes);
+		return fitness;
 	}
 	/**
 	 * given this candidate and a partner, randomly cross the 2 gene vectors
@@ -66,4 +68,8 @@ public class Individual {
 		}
 		return ret;
 	}
+	public void setPercentage(double p) {
+		percentage = p;
+	}
+	
 }
