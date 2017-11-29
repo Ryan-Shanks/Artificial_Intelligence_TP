@@ -6,7 +6,7 @@ public class Individual {
 	public double fitness;
 
 	private float chanceOfMutation; // possibility of variation within the population
-	private static final float DEFAULT_CHANCE_OF_MUTATION = 0.005f;
+	private static final float DEFAULT_CHANCE_OF_MUTATION = 0.05f;
 
 	/**
 	 * create a candidate with specific genes

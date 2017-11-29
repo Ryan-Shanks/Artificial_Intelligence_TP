@@ -37,7 +37,6 @@ public class SGA {
 
 		// Linear Search to be replace later with binary search
 		boolean found = false;
-		int j;
 		ThreadLocalRandom rand = ThreadLocalRandom.current();
 		double randValue;
 		Individual[] matingPool = new Individual[pop.length];
@@ -46,14 +45,11 @@ public class SGA {
 			randValue = rand.nextDouble();
 			found = false;
 			// linear search
-			j = 0;
-			while (!found) {
+			for(int j =0; j < matingPool.length; j++){
 				if (randValue < percentage[j]) {
 					matingPool[i] = pop[j]; // This does not appear to be working for some reason, still all null
-				}else {
-					found = true;
+					break;
 				}
-				j++;
 			}
 		}
 		return matingPool;
@@ -93,10 +89,22 @@ public class SGA {
 	public void run() {
 		// TODO, obviously need to change to count generations or go until no more
 		// improvements are found
+		int count =0;
 		while (true) {
 			Individual[] matingPool = getMatingPool(); // do the biased roulette and get the results
+			System.out.println("Generation: " + count +" Max fitness: " + getMaxFitness());
 			mate(matingPool); // mate members of the pool to produce a new pop, overwriting the old one
 			mutateAll(); // apply mutations
+			count ++;
 		}
-	}	
+	}
+	private double getMaxFitness() {
+		double max = 0;
+		for (Individual i : pop) {
+			if (i.fitness > max) {
+				max = i.fitness;
+			}
+		}
+		return max;
+	}
 }
