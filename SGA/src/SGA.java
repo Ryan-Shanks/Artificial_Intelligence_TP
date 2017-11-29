@@ -99,4 +99,9 @@ public class SGA {
 			mutateAll(); // apply mutations
 		}
 	}
+	
+	public void MatingPool() {
+		
+	}
+	
 }
