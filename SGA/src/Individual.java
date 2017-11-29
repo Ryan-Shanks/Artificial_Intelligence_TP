@@ -1,17 +1,20 @@
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Individual {
-	public boolean[] genes;
-	public static Problem prob = null;
-	public double fitness;
-	public double percentage;
+	private boolean[] genes;
+	private static Problem prob = null;
+	private double fitness;
+	private double percentage;
+
+	private static final int SIZE = 500;
+	private int[] genetics = new int[SIZE];
+	private int fitnessValue;
 	
 	/**
 	 * create a candidate with specific genes
 	 * @param genes
-	 * @param p
 	 */
-	public Individual(boolean[] genes) {
+	private Individual(boolean[] genes) {
 		if (prob == null) {
 			throw new java.lang.NullPointerException("You must provide a reference to the problem to the candidate class");
 		}
@@ -32,7 +35,7 @@ public class Individual {
 	/**
 	 * will calculate the fitness of this individual and store it in the fitness variable
 	 */
-	public double calcFitness(){
+	double calcFitness(){
 		fitness = prob.fitness(genes);
 		return fitness;
 	}
