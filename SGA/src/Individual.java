@@ -12,7 +12,7 @@ public class Individual {
 	 * create a candidate with specific genes
 	 * 
 	 * @param genes
-	 * @param p
+	 * @param chanceOfMutation
 	 */
 	public Individual(boolean[] genes, float chanceOfMutation) {
 		if (prob == null) {
