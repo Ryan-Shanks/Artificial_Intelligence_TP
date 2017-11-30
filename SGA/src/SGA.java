@@ -86,11 +86,11 @@ public class SGA {
 	/**
 	 * run the algorithm. Stopping condition TBD.
 	 */
-	public void run() {
+	public void run(int generations) {
 		// TODO, obviously need to change to count generations or go until no more
 		// improvements are found
-		int count =0;
-		while (true) {
+		int count = 0;
+		while (count < generations) {
 			Individual[] matingPool = getMatingPool(); // do the biased roulette and get the results
 			System.out.println("Generation: " + count +" Max fitness: " + getMaxFitness());
 			mate(matingPool); // mate members of the pool to produce a new pop, overwriting the old one
