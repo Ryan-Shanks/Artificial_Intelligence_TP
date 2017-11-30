@@ -40,6 +40,8 @@ public class Individual {
 
 	/**
 	 * create a new candidate with random genes and given chance of mutation
+     *
+     * not used.. delete?
 	 */
 	public Individual(float chanceOfMutation) {
 		if (prob == null) {

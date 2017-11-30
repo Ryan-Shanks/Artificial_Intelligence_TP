@@ -43,7 +43,7 @@ public class SGA {
 
 		for (int i = 0; i < matingPool.length; i++) { // for each space in the mating pool
 			randValue = rand.nextDouble();
-			found = false;
+			found = false; //not used.. delete?
 			// linear search
 			for(int j =0; j < matingPool.length; j++){
 				if (randValue < percentage[j]) {
