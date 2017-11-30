@@ -43,7 +43,7 @@ public class SGA {
 
 		for (int i = 0; i < matingPool.length; i++) { // for each space in the mating pool
 			randValue = rand.nextDouble();
-			found = false;
+			found = false; //not used.. delete?
 			// linear search
 			for(int j =0; j < matingPool.length; j++){
 				if (randValue < percentage[j]) {
@@ -84,15 +84,17 @@ public class SGA {
 	}
 
 	/**
-	 * run the algorithm. Stopping condition TBD.
+	 * run the algorithm. Stopping condition: generations.
+	 *
+	 *  @param generations number of iterations
 	 */
-	public void run() {
+	public void run(int generations) {
 		// TODO, obviously need to change to count generations or go until no more
 		// improvements are found
-		int count =0;
-		while (true) {
+		int count = 0;
+		while (count < generations) {
 			Individual[] matingPool = getMatingPool(); // do the biased roulette and get the results
-			System.out.println("Generation: " + count +" Max fitness: " + getMaxFitness());
+			System.out.println("Generation: " + count + " Max fitness: " + getMaxFitness());
 			mate(matingPool); // mate members of the pool to produce a new pop, overwriting the old one
 			mutateAll(); // apply mutations
 			count ++;
