@@ -1,0 +1,15 @@
+Could have the mutation rate vary with the population diversity (if diversity is low, increase mutations, if it is already high, decrease them)
+
+Could look at specific genes and try to insure each one exists in the pop as both a 1 and a 0. Problem is this makes it harder to remove
+undesirable genes and could make algorithm inefficent
+
+Could evaluate the fitness of the individual before and after the mutation is applied and revert any that are lower.
+Downside is this would reduce the randomness and might make it easier to get stuck
+
+Could make the breeding more random, instead of choosing one point to cut the array and producing 2 new individuals with opposite parts,
+could create 2 arrays and randomly select per gene which parent it comes from.
+This might help uncouple things - genes that are close in the array are probably more likely to stick together,
+but may be unrelated in the actual function
+
+Idk how much freedom we are allowed in changing the way the algorithm behaves, we should probably ask if we are going to consider any of these.
+Or better yet, could just make them optional
