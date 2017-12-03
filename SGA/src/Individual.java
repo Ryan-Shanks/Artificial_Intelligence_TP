@@ -12,7 +12,7 @@ public class Individual {
 	 * create a candidate with specific genes
 	 * 
 	 * @param genes
-	 * @param chanceOfMutation
+	 * @param p
 	 */
 	public Individual(boolean[] genes, float chanceOfMutation) {
 		if (prob == null) {
@@ -40,8 +40,6 @@ public class Individual {
 
 	/**
 	 * create a new candidate with random genes and given chance of mutation
-     *
-     * not used.. delete?
 	 */
 	public Individual(float chanceOfMutation) {
 		if (prob == null) {
@@ -56,7 +54,8 @@ public class Individual {
 	}
 
 	/**
-	 * will calculate the fitness of this individual and store it in the fitness
+	 * will calculate the fitness of this individual and store it in the 
+	 * fitness
 	 * variable
 	 */
 	public void calcFitness() {
@@ -74,7 +73,8 @@ public class Individual {
 			return null;
 		} else {
 			// randomly cross the 2 vectors
-			int split = ThreadLocalRandom.current().nextInt(1, genes.length);
+			int split = ThreadLocalRandom.current().nextInt(1, genes.length - 1);
+			System.out.println("Split: " + split);
 			Individual[] ret = {
 					// candidate with the beginning of this and the end of the other
 					new Individual(cross(genes, other.genes, split), chanceOfMutation),
@@ -102,11 +102,24 @@ public class Individual {
 	public void mutate() {
 		if (chanceOfMutation > 0) { // dont bother if mutation is disabled
 			ThreadLocalRandom rand = ThreadLocalRandom.current();
-			for (boolean g : genes) { // for each gene
+			for (int i = 0; i < genes.length; i++) { // for each gene
 				if (rand.nextFloat() < chanceOfMutation) { // generate a random between 0 and 1 and flip if its less
-					g = !g;
+					genes[i] = !genes[i];
 				}
 			}
 		}
 	}
+	
+	public String print() {
+		String value = "[";
+		for (int i  = 0; i < genes.length; i++) {
+			if (genes[i] == true)
+				value += 1 + ", ";
+			else
+				value += 0 + ", ";
+		}
+		value += "]";
+		return value;
+	}
+	
 }

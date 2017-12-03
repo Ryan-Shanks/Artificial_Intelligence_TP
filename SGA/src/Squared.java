@@ -6,18 +6,19 @@
  *
  */
 public class Squared implements Problem {
+	static int LENGTH = 5;
 	public double fitness(boolean[] candidate) {
 		double result = 0;
-		for (int p = 15; p >= 0; p--) {
-			if (candidate[15 - p]) {
+		for (int p = LENGTH - 1; p >= 0; p--) {
+			if (candidate[(LENGTH - 1) - p]) {
 				result += Math.pow(2, p);
 			}
 		}
-		return Math.pow(result,2);
+		return Math.pow(result, 2);
 	}
 
 	public int getNumChromosomes() {
-		return 16;
+		return LENGTH;
 	}
 
 	public int getMaxOrMin() {
