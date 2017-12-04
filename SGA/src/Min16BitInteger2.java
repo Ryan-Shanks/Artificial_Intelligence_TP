@@ -5,7 +5,7 @@
  * @author ryanw
  *
  */
-public class Squared implements Problem {
+public class Min16BitInteger2 implements Problem {
 	public double fitness(boolean[] candidate) {
 		double result = 0;
 		for (int p = 15; p >= 0; p--) {
@@ -22,7 +22,7 @@ public class Squared implements Problem {
 	}
 
 	public int getMaxOrMin() {
-		return 1;
+		return -1;
 	}
 
 }
