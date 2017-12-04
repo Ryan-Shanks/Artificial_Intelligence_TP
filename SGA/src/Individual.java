@@ -142,4 +142,8 @@ public class Individual {
 			}
 		}
 	}
+	@Override
+	public String toString() {
+		return "fitness: " + fitness + " genes: " + Arrays.toString(genes).replace("true", "1").replace("false", "0");
+	}
 }

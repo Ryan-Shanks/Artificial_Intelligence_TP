@@ -1,4 +1,5 @@
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class SGA {
@@ -23,6 +24,7 @@ public class SGA {
 		}
 		return total;
 	}
+
 	/**
 	 * return the fitness of the least fit individual in the population
 	 */
@@ -40,7 +42,7 @@ public class SGA {
 		double total = testPopFitness();
 		double[] percentage = new double[pop.length];
 		double minFitness = getFitnessOfLeastFit();
-		total -= ((minFitness-1) * pop.length);
+		total -= ((minFitness - 1) * pop.length);
 		// percentage of each total
 		for (int i = 0; i < pop.length; i++) {
 			if (i == 0) {
@@ -60,7 +62,7 @@ public class SGA {
 		for (int i = 0; i < matingPool.length; i++) { // for each space in the mating pool
 			randValue = rand.nextDouble();
 			// linear search
-			for(int j =0; j < matingPool.length; j++){
+			for (int j = 0; j < matingPool.length; j++) {
 				if (randValue < percentage[j]) {
 					matingPool[i] = pop[j]; // This does not appear to be working for some reason, still all null
 					break;
@@ -101,20 +103,53 @@ public class SGA {
 	/**
 	 * run the algorithm. Stopping condition: generations.
 	 *
-	 *  @param generations number of iterations
+	 * @param generations
+	 *            number of iterations
 	 */
 	public void run(int generations) {
-		int count = 0;
-		int maxFit = 0;
-		while (maxFit != 65535) {
+		int count = 0, generationFirstEncounteredMaxFitness = -1;
+		double maxFitnessSoFar = Double.MIN_VALUE;
+		HashSet<Individual> individualsWithMaxFitness = new HashSet<Individual>();
+
+		while (count - generationFirstEncounteredMaxFitness < generations
+				|| generationFirstEncounteredMaxFitness == -1) {
 			Individual[] matingPool = getMatingPool(); // do the biased roulette and get the results
-			System.out.println("Generation: " + count + " Max fitness: " + (maxFit = (int) getFitnessOfMostFit()) + " Unique pop: " + getNumUnique());
+			double fittest = getFitnessOfMostFit();
+
+			// if we have found an individual that is better than any we have ever found
+			// before
+			if (fittest > maxFitnessSoFar) {
+				maxFitnessSoFar = fittest;
+				generationFirstEncounteredMaxFitness = count;
+				individualsWithMaxFitness.clear();
+				for (Individual i : pop) { // there could be multiple solutions, add them all to the set
+					if (i.fitness == fittest) {
+						individualsWithMaxFitness.add(i);
+					}
+				}
+			} else if (fittest == maxFitnessSoFar) { // perhaps we have found a new solution, try and add it to the set
+				for (Individual i : pop) { // there could be multiple solutions, add them all to the set
+					if (i.fitness == fittest) {
+						individualsWithMaxFitness.add(i);
+					}
+				}
+			} // else this generation does not contain the best we have seen, keep going
+
+			System.out.println("Generation: " + count + " Max fitness: " + getFitnessOfMostFit() + " Unique pop: "
+					+ getNumUnique());
 			mate(matingPool); // mate members of the pool to produce a new pop, overwriting the old one
 			mutateAll(); // apply mutations
-			count ++;
+			count++;
+		}
+		System.out.println("----------------------DONE----------------------");
+		Iterator<Individual> i = individualsWithMaxFitness.iterator();
+		for (int solCount = 1; i.hasNext(); solCount++) {
+			Individual solution = i.next();
+			System.out.println("Solution " + solCount + ": " + solution.toString());
 		}
 	}
-	//debugging, but might be useful in checking the answer as well
+
+	// debugging, but might be useful in checking the answer as well
 	private double getFitnessOfMostFit() {
 		double max = 0;
 		for (Individual i : pop) {
@@ -124,7 +159,8 @@ public class SGA {
 		}
 		return max;
 	}
-	//debugging
+
+	// debugging
 	private int getNumUnique() {
 		HashSet<Individual> set = new HashSet<Individual>();
 		for (Individual i : pop) {
