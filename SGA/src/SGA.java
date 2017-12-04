@@ -26,7 +26,7 @@ public class SGA {
 	/**
 	 * return the fitness of the least fit individual in the population
 	 */
-	private double getMinFitness() {
+	private double getFitnessOfLeastFit() {
 		double min = Double.MAX_VALUE;
 		for (Individual i : pop) {
 			if (i.fitness < min) {
@@ -39,7 +39,7 @@ public class SGA {
 	private Individual[] getMatingPool() {
 		double total = testPopFitness();
 		double[] percentage = new double[pop.length];
-		double minFitness = getMinFitness();
+		double minFitness = getFitnessOfLeastFit();
 		total -= ((minFitness-1) * pop.length);
 		// percentage of each total
 		for (int i = 0; i < pop.length; i++) {
@@ -108,13 +108,13 @@ public class SGA {
 		int maxFit = 0;
 		while (maxFit != 65535) {
 			Individual[] matingPool = getMatingPool(); // do the biased roulette and get the results
-			System.out.println("Generation: " + count + " Max fitness: " + (maxFit = (int) getMaxFitness()) + " Unique pop: " + getNumUnique());
+			System.out.println("Generation: " + count + " Max fitness: " + (maxFit = (int) getFitnessOfMostFit()) + " Unique pop: " + getNumUnique());
 			mate(matingPool); // mate members of the pool to produce a new pop, overwriting the old one
 			mutateAll(); // apply mutations
 			count ++;
 		}
 	}
-	private double getMaxFitness() {
+	private double getFitnessOfMostFit() {
 		double max = 0;
 		for (Individual i : pop) {
 			if (i.fitness > max) {
