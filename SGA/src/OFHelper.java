@@ -33,7 +33,9 @@ public class OFHelper {
 			if(input[i]) {
 				val =val |1;
 			}
-			val = val << 1;
+			if (i < 31) { // dont shift the last one
+				val = val << 1;
+			}
 		}
 		//so now val is 4 bytes and contains the 32 boolean bits.
 		// now we need to somehow represent it as a float without casting it.
