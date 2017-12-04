@@ -4,6 +4,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class SGA {
 	Individual[] pop;
+	Problem prob;
 
 	public SGA(Problem p, int popSize) {
 		pop = new Individual[popSize];
@@ -11,6 +12,7 @@ public class SGA {
 		for (int i = 0; i < pop.length; i++) {
 			pop[i] = new Individual();
 		}
+		prob = p;
 	}
 
 	/**
@@ -28,7 +30,7 @@ public class SGA {
 	/**
 	 * return the fitness of the least fit individual in the population
 	 */
-	private double getFitnessOfLeastFit() {
+	private double getMinFitness() {
 		double min = Double.MAX_VALUE;
 		for (Individual i : pop) {
 			if (i.fitness < min) {
@@ -38,20 +40,64 @@ public class SGA {
 		return min;
 	}
 
-	private Individual[] getMatingPool() {
+	private double[] generatePercentagesForRouletteMAX() {
+		double[] p = new double[pop.length];
 		double total = testPopFitness();
-		double[] percentage = new double[pop.length];
-		double minFitness = getFitnessOfLeastFit();
+		double minFitness = getMinFitness();
 		total -= ((minFitness - 1) * pop.length);
 		// percentage of each total
 		for (int i = 0; i < pop.length; i++) {
 			if (i == 0) {
-				percentage[i] = ((pop[i].fitness - minFitness + 1) / total);
+				p[i] = ((pop[i].fitness - minFitness + 1) / total);
 			} else if (i < pop.length - 1) { // if it is not the last one
-				percentage[i] = percentage[i - 1] + ((pop[i].fitness - minFitness + 1) / total);
+				p[i] = p[i - 1] + ((pop[i].fitness - minFitness + 1) / total);
 			} else {
-				percentage[i] = 1.0; // make sure it is 1, there may otherwise be some error due to FP rounding
+				p[i] = 1.0; // make sure it is 1, there may otherwise be some error due to FP rounding
 			}
+		}
+		return p;
+	}
+
+	private double getMaxFitness() {
+		double max = -Double.MAX_VALUE;
+		for (Individual i : pop) {
+			if (i.fitness > max) {
+				max = i.fitness;
+			}
+		}
+		return max;
+	}
+
+	private double[] generatePercentagesForRouletteMIN() {
+		double[] p = new double[pop.length];
+		testPopFitness();
+		double maxFitness = getMaxFitness();
+		double[] fitnesses = new double[pop.length];
+		double total = 0;
+		for (int i = 0; i < pop.length; i++) {
+			fitnesses[i] = -1 * (pop[i].fitness - maxFitness - 1);
+			total += fitnesses[i];
+		}
+
+		for (int i = 0; i < pop.length; i++) {
+			if (i == 0) {
+				p[i] = fitnesses[i] / total;
+			} else if (i < pop.length - 1) { // if it is not the last one
+				p[i] = p[i - 1] +fitnesses[i] / total;
+			} else {
+				p[i] = 1.0; // make sure it is 1, there may otherwise be some error due to FP rounding
+			}
+		}
+		return p;
+	}
+
+	private Individual[] getMatingPool() {
+
+		double[] percentage;
+		if (prob.getMaxOrMin() == 1) {
+			percentage = generatePercentagesForRouletteMAX();
+		} else { // min
+			percentage = generatePercentagesForRouletteMIN();
 		}
 
 		// Linear Search to be replace later with binary search
@@ -107,57 +153,46 @@ public class SGA {
 	 *            number of iterations
 	 */
 	public void run(int generations) {
-		int count = 0, generationFirstEncounteredMaxFitness = -1;
-		double maxFitnessSoFar = Double.MIN_VALUE;
-		HashSet<Individual> individualsWithMaxFitness = new HashSet<Individual>();
+		int count = 0, generationFirstEncounteredBestFitness = -1;
+		double maxFitnessSoFar = prob.getMaxOrMin() * -Double.MAX_VALUE;
+		HashSet<Individual> fittestIndividuals = new HashSet<Individual>();
 
-		while (count - generationFirstEncounteredMaxFitness < generations
-				|| generationFirstEncounteredMaxFitness == -1) {
+		while (count - generationFirstEncounteredBestFitness < generations) {
 			Individual[] matingPool = getMatingPool(); // do the biased roulette and get the results
-			double fittest = getFitnessOfMostFit();
+			double fittest = prob.getMaxOrMin() == 1 ? getMaxFitness() : getMinFitness();
 
 			// if we have found an individual that is better than any we have ever found
 			// before
-			if (fittest > maxFitnessSoFar) {
+			if ((prob.getMaxOrMin() == 1 && fittest > maxFitnessSoFar)
+					|| (prob.getMaxOrMin() == -1 && fittest < maxFitnessSoFar)) {
 				maxFitnessSoFar = fittest;
-				generationFirstEncounteredMaxFitness = count;
-				individualsWithMaxFitness.clear();
+				generationFirstEncounteredBestFitness = count;
+				fittestIndividuals.clear();
 				for (Individual i : pop) { // there could be multiple solutions, add them all to the set
 					if (i.fitness == fittest) {
-						individualsWithMaxFitness.add(i);
+						fittestIndividuals.add(i);
 					}
 				}
 			} else if (fittest == maxFitnessSoFar) { // perhaps we have found a new solution, try and add it to the set
 				for (Individual i : pop) { // there could be multiple solutions, add them all to the set
 					if (i.fitness == fittest) {
-						individualsWithMaxFitness.add(i);
+						fittestIndividuals.add(i);
 					}
 				}
 			} // else this generation does not contain the best we have seen, keep going
 
-			System.out.println("Generation: " + count + " Max fitness: " + getFitnessOfMostFit() + " Unique pop: "
-					+ getNumUnique());
+			System.out.println("Generation: " + count + " Best fitness: "
+					+ (prob.getMaxOrMin() == 1 ? getMaxFitness() : getMinFitness()) + " Unique pop: " + getNumUnique());
 			mate(matingPool); // mate members of the pool to produce a new pop, overwriting the old one
 			mutateAll(); // apply mutations
 			count++;
 		}
 		System.out.println("----------------------DONE----------------------");
-		Iterator<Individual> i = individualsWithMaxFitness.iterator();
+		Iterator<Individual> i = fittestIndividuals.iterator();
 		for (int solCount = 1; i.hasNext(); solCount++) {
 			Individual solution = i.next();
 			System.out.println("Solution " + solCount + ": " + solution.toString());
 		}
-	}
-
-	// debugging, but might be useful in checking the answer as well
-	private double getFitnessOfMostFit() {
-		double max = 0;
-		for (Individual i : pop) {
-			if (i.fitness > max) {
-				max = i.fitness;
-			}
-		}
-		return max;
 	}
 
 	// debugging

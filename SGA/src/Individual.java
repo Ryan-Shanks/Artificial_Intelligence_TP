@@ -93,7 +93,7 @@ public class Individual {
 	 * variable
 	 */
 	public void calcFitness() {
-		fitness = prob.getMaxOrMin() * prob.fitness(genes);
+		fitness = prob.fitness(genes);
 	}
 
 	/**

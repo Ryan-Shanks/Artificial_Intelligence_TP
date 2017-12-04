@@ -19,6 +19,6 @@ public class Vars10Terms45 implements Problem {
 
 	@Override
 	public int getMaxOrMin() {
-		return 1;
+		return -1;
 	}
 }
