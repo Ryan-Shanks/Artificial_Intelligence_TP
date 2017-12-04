@@ -1,6 +1,39 @@
+import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Individual {
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + Arrays.hashCode(genes);
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		Individual other = (Individual) obj;
+		if (!Arrays.equals(genes, other.genes)) {
+			return false;
+		}
+		return true;
+	}
+
 	public boolean[] genes;
 	public static Problem prob = null;
 	public double fitness;

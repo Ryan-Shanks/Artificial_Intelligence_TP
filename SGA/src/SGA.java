@@ -1,3 +1,4 @@
+import java.util.HashSet;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class SGA {
@@ -90,7 +91,7 @@ public class SGA {
 		int count = 0;
 		while (count < generations) {
 			Individual[] matingPool = getMatingPool(); // do the biased roulette and get the results
-			System.out.println("Generation: " + count + " Max fitness: " + getMaxFitness());
+			System.out.println("Generation: " + count + " Max fitness: " + getMaxFitness() + " Unique pop: " + getNumUnique());
 			mate(matingPool); // mate members of the pool to produce a new pop, overwriting the old one
 			mutateAll(); // apply mutations
 			count ++;
@@ -104,5 +105,12 @@ public class SGA {
 			}
 		}
 		return max;
+	}
+	private int getNumUnique() {
+		HashSet<Individual> set = new HashSet<Individual>();
+		for (Individual i : pop) {
+			set.add(i);
+		}
+		return set.size();
 	}
 }
