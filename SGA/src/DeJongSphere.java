@@ -4,12 +4,12 @@ public class DeJongSphere implements Problem {
 
 	@Override
 	public double fitness(boolean[] candidate) {
-		float fitness = 0, floatValue;
+		double fitness = 0, dValue;
 		boolean[] portion = new boolean[32];
 		for (int i = 0; i < n; i++) {
 			System.arraycopy(candidate, i * 32, portion, 0, 32);
-			floatValue = OFHelper.floatFromBoolArray(portion);
-			fitness += Math.pow(floatValue, 2);
+			dValue = OFHelper.floatFromBoolArray(portion);
+			fitness += Math.pow(dValue, 2);
 		}
 		return fitness;
 	}

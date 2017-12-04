@@ -15,8 +15,8 @@ public class RosenbrockValley implements Problem {
 	public double fitness(boolean[] candidate) {
 		boolean[] xBool = Arrays.copyOf(candidate, 32);
 		boolean[] yBool = Arrays.copyOfRange(candidate, 32, 64);
-		float x = OFHelper.floatFromBoolArray(xBool);
-		float y = OFHelper.floatFromBoolArray(yBool);
+		double x = OFHelper.floatFromBoolArray(xBool);
+		double y = OFHelper.floatFromBoolArray(yBool);
 
 		return Math.pow(a - x, 2) + b * Math.pow(y - x * x, 2);
 	}
