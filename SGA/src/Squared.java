@@ -13,7 +13,8 @@ public class Squared implements Problem {
 				result += Math.pow(2, p);
 			}
 		}
-		return Math.pow(result,2);
+		//return Math.pow(result,2);
+		return result;
 	}
 
 	public int getNumChromosomes() {

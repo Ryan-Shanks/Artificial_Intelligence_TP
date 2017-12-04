@@ -39,7 +39,7 @@ public class Individual {
 	public double fitness;
 
 	private float chanceOfMutation; // possibility of variation within the population
-	private static final float DEFAULT_CHANCE_OF_MUTATION = 0.05f;
+	private static final float DEFAULT_CHANCE_OF_MUTATION = 0.005f;
 
 	/**
 	 * create a candidate with specific genes
@@ -135,9 +135,9 @@ public class Individual {
 	public void mutate() {
 		if (chanceOfMutation > 0) { // dont bother if mutation is disabled
 			ThreadLocalRandom rand = ThreadLocalRandom.current();
-			for (boolean g : genes) { // for each gene
+			for (int i =0; i < genes.length; i++) { // for each gene
 				if (rand.nextFloat() < chanceOfMutation) { // generate a random between 0 and 1 and flip if its less
-					g = !g;
+					genes[i] = !genes[i];
 				}
 			}
 		}
