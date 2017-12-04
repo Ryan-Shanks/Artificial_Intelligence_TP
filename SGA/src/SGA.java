@@ -114,6 +114,7 @@ public class SGA {
 			count ++;
 		}
 	}
+	//debugging, but might be useful in checking the answer as well
 	private double getFitnessOfMostFit() {
 		double max = 0;
 		for (Individual i : pop) {
@@ -123,6 +124,7 @@ public class SGA {
 		}
 		return max;
 	}
+	//debugging
 	private int getNumUnique() {
 		HashSet<Individual> set = new HashSet<Individual>();
 		for (Individual i : pop) {
