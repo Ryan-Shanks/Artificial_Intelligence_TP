@@ -1,5 +1,9 @@
 import java.util.Arrays;
-
+/**
+ * Rosenbrock Valley. Vector length is 64, 32 bits for x first, next 32 for y. a,b are configurable below.
+ * @author ryanw
+ *
+ */
 public class RosenbrockValley implements Problem {
 
 	private final float a = 1, b = 100;
