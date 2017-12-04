@@ -1,5 +1,9 @@
 import java.util.Arrays;
-
+/**
+ * representation for the Himmelblau function. First 32 bits of the bool vector are x, next 32 are y
+ * @author ryanw
+ *
+ */
 public class HimmelblauFunction implements Problem {
 
 	@Override
@@ -13,12 +17,11 @@ public class HimmelblauFunction implements Problem {
 
 	@Override
 	public int getNumChromosomes() {
-		return 64;
+		return 64; // takes 2 floats, each is 32 bits
 	}
 
 	@Override
 	public int getMaxOrMin() {
 		return -1;
 	}
-
 }
