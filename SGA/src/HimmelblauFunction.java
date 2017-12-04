@@ -12,7 +12,7 @@ public class HimmelblauFunction implements Problem {
 		boolean[] yBool = Arrays.copyOfRange(candidate, 32, 64);
 		float x = OFHelper.floatFromBoolArray(xBool);
 		float y = OFHelper.floatFromBoolArray(yBool);
-		return Math.pow(x * x + y + 11, 2) + Math.pow(x + y * y - 7, 2);
+		return Math.pow(x * x + y - 11, 2) + Math.pow(x + y * y - 7, 2);
 	}
 
 	@Override
@@ -24,4 +24,14 @@ public class HimmelblauFunction implements Problem {
 	public int getMaxOrMin() {
 		return -1;
 	}
+
+	@Override
+	public String genesToString(boolean[] genes) {
+		boolean[] xBool = Arrays.copyOf(genes, 32);
+		boolean[] yBool = Arrays.copyOfRange(genes, 32, 64);
+		float x = OFHelper.floatFromBoolArray(xBool);
+		float y = OFHelper.floatFromBoolArray(yBool);
+		return "x = " + x + " y = " + y;
+	}
+	
 }

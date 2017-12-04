@@ -39,7 +39,7 @@ public class Individual {
 	public double fitness;
 
 	private float chanceOfMutation; // possibility of variation within the population
-	private static final float DEFAULT_CHANCE_OF_MUTATION = 0.005f;
+	private static final float DEFAULT_CHANCE_OF_MUTATION = 0.0005f;
 
 	/**
 	 * create a candidate with specific genes
@@ -144,6 +144,6 @@ public class Individual {
 	}
 	@Override
 	public String toString() {
-		return "fitness: " + fitness + " genes: " + Arrays.toString(genes).replace("true", "1").replace("false", "0");
+		return "fitness: " + fitness + " genes: " + prob.genesToString(genes);
 	}
 }

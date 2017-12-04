@@ -1,3 +1,4 @@
+import java.util.Arrays;
 
 public class Vars12Terms66 implements Problem {
 
@@ -24,6 +25,11 @@ public class Vars12Terms66 implements Problem {
 	@Override
 	public int getMaxOrMin() {
 		return 1;
+	}
+
+	@Override
+	public String genesToString(boolean[] genes) {
+		return Arrays.toString(genes).replace("true", "1").replace("false", "-1");
 	}
 
 }

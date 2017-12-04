@@ -30,4 +30,12 @@ public interface Problem {
 	 * 
 	 */
 	public int getMaxOrMin();
+
+	/**
+	 * Used to specify an appropriate format for outputting the genes as a string.
+	 * Could be fine to leave as bool array, or perhaps they should be converted to
+	 * float
+	 * 
+	 */
+	public String genesToString(boolean[] genes);
 }

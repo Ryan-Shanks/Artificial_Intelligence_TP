@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class Vars13Terms78 implements Problem {
 	@Override
 	public double fitness(boolean[] candidate) {
@@ -26,4 +28,8 @@ public class Vars13Terms78 implements Problem {
 		return 1;
 	}
 
+	@Override
+	public String genesToString(boolean[] genes) {
+		return Arrays.toString(genes).replace("true", "1").replace("false", "-1");
+	}
 }

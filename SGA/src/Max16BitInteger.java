@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 /**
  * basic test class. Problem is to find the largest 16 bit number squared. 0th
  * bit is the MSB
@@ -24,5 +26,8 @@ public class Max16BitInteger implements Problem {
 	public int getMaxOrMin() {
 		return 1;
 	}
-
+	@Override
+	public String genesToString(boolean[] genes) {
+		return Arrays.toString(genes).replace("true", "1").replace("false", "-1");
+	}
 }

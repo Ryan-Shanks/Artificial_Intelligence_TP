@@ -1,3 +1,4 @@
+import java.util.Arrays;
 
 public class Vars19Terms171 implements Problem {
 	@Override
@@ -40,5 +41,9 @@ public class Vars19Terms171 implements Problem {
 	@Override
 	public int getMaxOrMin() {
 		return 1;
+	}
+	@Override
+	public String genesToString(boolean[] genes) {
+		return Arrays.toString(genes).replace("true", "1").replace("false", "-1");
 	}
 }

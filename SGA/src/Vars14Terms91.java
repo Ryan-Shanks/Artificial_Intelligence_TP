@@ -1,3 +1,4 @@
+import java.util.Arrays;
 
 public class Vars14Terms91 implements Problem {
 
@@ -31,4 +32,8 @@ public class Vars14Terms91 implements Problem {
 		return 1;
 	}
 
+	@Override
+	public String genesToString(boolean[] genes) {
+		return Arrays.toString(genes).replace("true", "1").replace("false", "-1");
+	}
 }

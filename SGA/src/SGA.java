@@ -83,7 +83,7 @@ public class SGA {
 			if (i == 0) {
 				p[i] = fitnesses[i] / total;
 			} else if (i < pop.length - 1) { // if it is not the last one
-				p[i] = p[i - 1] +fitnesses[i] / total;
+				p[i] = p[i - 1] + fitnesses[i] / total;
 			} else {
 				p[i] = 1.0; // make sure it is 1, there may otherwise be some error due to FP rounding
 			}
@@ -152,7 +152,7 @@ public class SGA {
 	 * @param generations
 	 *            number of iterations
 	 */
-	public void run(int generations) {
+	public void run(int generations, boolean debug) {
 		int count = 0, generationFirstEncounteredBestFitness = -1;
 		double maxFitnessSoFar = prob.getMaxOrMin() * -Double.MAX_VALUE;
 		HashSet<Individual> fittestIndividuals = new HashSet<Individual>();
@@ -181,8 +181,11 @@ public class SGA {
 				}
 			} // else this generation does not contain the best we have seen, keep going
 
-			System.out.println("Generation: " + count + " Best fitness: "
-					+ (prob.getMaxOrMin() == 1 ? getMaxFitness() : getMinFitness()) + " Unique pop: " + getNumUnique());
+			if (debug) {
+				System.out.println("Generation: " + count + " Best fitness: "
+						+ (prob.getMaxOrMin() == 1 ? getMaxFitness() : getMinFitness()) + " Unique pop: "
+						+ getNumUnique());
+			}
 			mate(matingPool); // mate members of the pool to produce a new pop, overwriting the old one
 			mutateAll(); // apply mutations
 			count++;
