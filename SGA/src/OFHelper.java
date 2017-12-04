@@ -31,7 +31,7 @@ public class OFHelper {
 		int val = 0;
 		for (int i =0; i < 32; i++) {
 			if(input[i]) {
-				val++;
+				val =val |1;
 			}
 			val = val << 1;
 		}
