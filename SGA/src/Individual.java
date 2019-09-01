@@ -1,3 +1,5 @@
+import problem.Problem;
+
 import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 

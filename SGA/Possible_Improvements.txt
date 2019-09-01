@@ -1,6 +1,6 @@
 Could have the mutation rate vary with the population diversity (if diversity is low, increase mutations, if it is already high, decrease them)
 
-Could look at specific genes and try to insure each one exists in the pop as both a 1 and a 0. Problem is this makes it harder to remove
+Could look at specific genes and try to insure each one exists in the pop as both a 1 and a 0. problem.Problem is this makes it harder to remove
 undesirable genes and could make algorithm inefficent
 
 Could evaluate the fitness of the individual before and after the mutation is applied and revert any that are lower.
